@@ -1,15 +1,20 @@
 import { useForm, SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import { IFormInput } from "./interfaces";
 import { RegisterForm } from "../data";
+import InputErrorMessage from "../components/InputErrorMessage";
+import { registerSchema } from "../validation";
 
 const RegisterPage = () => {
   const {
     register,
     handleSubmit,
-    // formState: { errors },
-  } = useForm<IFormInput>();
+    formState: { errors },
+  } = useForm<IFormInput>({
+    resolver: yupResolver(registerSchema),
+  });
 
   // *------- Handlers -------*
   const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
@@ -23,6 +28,7 @@ const RegisterPage = () => {
           placeholder={placeholder}
           {...register(name, validation)}
         />
+        {errors[name] && <InputErrorMessage msg={errors[name]?.message} />}
       </div>
     )
   );

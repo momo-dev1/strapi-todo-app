@@ -40,3 +40,9 @@ export interface IErrorResponse {
         message?: string;
     };
 }
+
+export interface ITodo {
+    id: number;
+    title: string;
+    description?: string;
+}
